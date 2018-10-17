@@ -4,9 +4,18 @@ Palombe lets you send and receive messages synchronously through different proce
 
 ## Quick example
 
+### Thread A
+
 ```javascript
 const palombe = require("palombe");
 
 palombe.send("foo", "bar");
+```
+
+### Thread B
+
+```javascript
+const palombe = require("palombe");
+
 console.log(palombe.receive("foo").toString("utf-8")); // bar
 ```
