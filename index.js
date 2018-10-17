@@ -1,18 +1,21 @@
 const fs = require("fs");
 const mkfifo = require("mkfifo");
 
-const PREFIX = "/tmp/palombe/";
+exports.mkfifo = function(name) {
+    const prefix = "/tmp/palombe/";
+    const path = `${prefix}${name}`;
+    fs.mkdirSync(prefix);
+    mkfifo.mkfifoSync(path, 0o600);
+    return path;
+}
 
 exports.send = function(name, value) {
-    const path = `${PREFIX}${name}`;
-    fs.mkdirSync(`${PREFIX}`);
-    mkfifo.mkfifoSync(path, 0o600);
+    const path = exports.mkfifo(name);
     fs.appendFileSync(path, value);
 }
 
 exports.receive = function(name) {
-    const path = `${PREFIX}${name}`
-    while (!fs.existsSync(path));
+    const path = exports.mkfifo(name);
     const output = fs.readFileSync(path);
     fs.unlinkSync(path);
     return output;

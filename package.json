@@ -1,6 +1,6 @@
 {
   "name": "palombe",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Palombe lets you send and receive messages synchronously through different processes using named pipes",
   "main": "index.js",
   "scripts": {
