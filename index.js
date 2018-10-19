@@ -1,7 +1,7 @@
 const fs = require("fs");
 const mkfifo = require("mkfifo");
 
-exports.mkfifo = function(name) {
+__mkfifo = function(name) {
     const prefix = "/tmp/palombe/";
     const path = `${prefix}${name}`;
     fs.mkdirSync(prefix);
@@ -10,12 +10,12 @@ exports.mkfifo = function(name) {
 }
 
 exports.send = function(name, value) {
-    const path = exports.mkfifo(name);
+    const path = __mkfifo(name);
     fs.appendFileSync(path, value);
 }
 
 exports.receive = function(name) {
-    const path = exports.mkfifo(name);
+    const path = __mkfifo(name);
     const output = fs.readFileSync(path);
     fs.unlinkSync(path);
     return output;
