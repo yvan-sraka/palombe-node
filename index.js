@@ -4,8 +4,10 @@ const mkfifo = require("mkfifo")
 __mkfifo = name => {
     const prefix = "/tmp/palombe/"
     const path = `${prefix}${name}`
-    fs.mkdirSync(prefix)
-    mkfifo.mkfifoSync(path, 0o600)
+    if (!fs.existsSync(prefix))
+        fs.mkdirSync(prefix)
+    if (!fs.existsSync(path))
+        mkfifo.mkfifoSync(path, 0o600)
     return path
 }
 
