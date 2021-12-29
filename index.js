@@ -1,11 +1,19 @@
+const fs = require("fs")
+const mkfifo = require("mkfifo")
+
+__mkfifo = name => {
+    const prefix = "/tmp/palombe/"
+    const path = `${prefix}${name}`
+    if (!fs.existsSync(prefix))
+        fs.mkdirSync(prefix)
+    if (!fs.existsSync(path))
+        mkfifo.mkfifoSync(path, 0o600)
+    return path
+}
+
 exports.send = (name, value) => {
     const path = __mkfifo(name)
     fs.appendFileSync(path, value)
-
-    var exec = require('child_process').exec;
-    exec('pwd', function callback(error, stdout, stderr){
-        // result
-    });
 }
 
 exports.receive = name => {
